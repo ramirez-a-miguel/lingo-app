@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: hsl(42 38% 97%);
+  --color-foreground: hsl(218 28% 14%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(218 28% 14%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(218 28% 14%);
+  --color-primary: hsl(172 64% 28%);
+  --color-primary-foreground: hsl(0 0% 100%);
+  --color-secondary: hsl(210 24% 91%);
+  --color-secondary-foreground: hsl(218 28% 14%);
+  --color-muted: hsl(210 22% 94%);
+  --color-muted-foreground: hsl(217 14% 42%);
+  --color-accent: hsl(37 88% 60%);
+  --color-accent-foreground: hsl(218 28% 14%);
+  --color-destructive: hsl(0 74% 48%);
+  --color-border: hsl(214 18% 84%);
+  --color-input: hsl(214 18% 84%);
+  --color-ring: hsl(172 64% 28%);
+  --radius-lg: 0.5rem;
+  --radius-md: 0.375rem;
+  --radius-sm: 0.25rem;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
