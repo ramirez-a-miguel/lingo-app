@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Bot, Loader2, Sparkles } from "lucide-react";
+import { Bot, Loader2, Sparkles } from "@/components/animated-icons";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -50,10 +50,10 @@ export function AiCoach({ video }: AiCoachProps) {
   }
 
   return (
-    <Card className="border-0 bg-white shadow-sm">
+    <Card>
       <CardContent className="space-y-4 p-4">
         <div className="flex items-start gap-3">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-secondary/10 text-secondary ring-1 ring-secondary/20">
             <Bot className="size-5" />
           </div>
           <div>
@@ -61,11 +61,10 @@ export function AiCoach({ video }: AiCoachProps) {
             <p className="mt-1 text-sm text-muted-foreground">Generate a short practice plan from this video.</p>
           </div>
         </div>
-        <Button onClick={askCoach} disabled={isLoading} className="w-full">
+        <Button onClick={askCoach} disabled={isLoading} size="icon" aria-label="Build practice plan" title="Build practice plan">
           {isLoading ? <Loader2 className="animate-spin" /> : <Sparkles />}
-          Build practice plan
         </Button>
-        {response ? <p className="whitespace-pre-wrap rounded-md bg-muted p-3 text-sm leading-6">{response}</p> : null}
+        {response ? <p className="whitespace-pre-wrap rounded-sm bg-surface-high p-3 text-sm leading-6">{response}</p> : null}
         {error ? <p className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">{error}</p> : null}
       </CardContent>
     </Card>

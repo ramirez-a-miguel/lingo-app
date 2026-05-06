@@ -1,11 +1,22 @@
 import Link from "next/link";
-import { ArrowLeft, BookMarked, Captions, CheckCircle2, Clock, Languages, ListVideo, Play } from "lucide-react";
+import {
+  ArrowLeft,
+  BookMarked,
+  Captions,
+  CheckCircle2,
+  Clock,
+  ExternalLink,
+  Languages,
+  ListVideo,
+  ShieldCheck,
+} from "@/components/animated-icons";
 
 import { AiCoach } from "@/components/ai-coach";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { VideoCard } from "@/components/video-card";
+import { YouTubePlayer } from "@/components/youtube-player";
 import { getRelatedVideos, getVideoById, videos } from "@/lib/videos";
 
 type WatchPageProps = {
@@ -27,57 +38,58 @@ export default async function WatchPage({ params }: WatchPageProps) {
 
   return (
     <main className="min-h-screen bg-background">
-      <header className="border-b bg-white">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+      <header className="m3-top-app-bar sticky top-0 z-30 border-b">
+        <div className="flex w-full items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Button asChild variant="ghost">
             <Link href="/">
               <ArrowLeft />
               Home
             </Link>
           </Button>
-          <div className="flex items-center gap-2 text-sm font-semibold">
-            <Languages className="size-4 text-primary" />
-            Language-only catalog
+          <div className="flex items-center gap-2 rounded-full bg-primary/10 px-3 py-2 text-sm font-semibold text-primary ring-1 ring-primary/20">
+            <ShieldCheck className="size-4" />
+            Language videos only
           </div>
         </div>
       </header>
 
-      <div className="mx-auto grid max-w-7xl gap-6 px-4 py-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+      <div className="grid w-full gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_380px] lg:px-8">
         <section className="space-y-5">
-          <div className="aspect-video overflow-hidden rounded-lg bg-[linear-gradient(135deg,#111827_0%,#12615a_48%,#f2b84b_100%)] p-5 text-white shadow-sm">
-            <div className="flex h-full flex-col justify-between">
-              <div className="flex items-center justify-between">
-                <Badge className="border-white/20 bg-white/15 text-white">{video.language}</Badge>
-                <span className="rounded-md bg-black/55 px-2 py-1 text-xs font-semibold">{video.duration}</span>
-              </div>
-              <div className="grid gap-5 md:grid-cols-[auto_1fr] md:items-end">
-                <div className="flex size-16 items-center justify-center rounded-full bg-white text-primary shadow-sm">
-                  <Play className="ml-1 size-8 fill-current" />
-                </div>
-                <div>
-                  <p className="mb-2 text-sm font-semibold uppercase text-white/70">{video.level} lesson</p>
-                  <h1 className="max-w-3xl text-3xl font-bold leading-tight">{video.title}</h1>
-                </div>
-              </div>
-            </div>
-          </div>
+          <YouTubePlayer video={video} />
 
-          <div className="space-y-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="secondary">{video.accent}</Badge>
+          <div className="m3-elevated-card p-5">
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <Badge className="bg-primary text-primary-foreground">{video.language}</Badge>
+              <Badge variant="secondary">{video.level}</Badge>
+              <Badge variant="outline">{video.accent}</Badge>
+              <Badge className="bg-secondary text-secondary-foreground">
+                <ShieldCheck className="mr-1 size-3.5" />
+                Curated language lesson
+              </Badge>
+            </div>
+            <h1 className="m3-type-headline-large max-w-4xl">{video.title}</h1>
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+              <span className="font-semibold text-foreground">{video.channel}</span>
+              <span>{video.views}</span>
+              <span>{video.published}</span>
+              <Button asChild variant="outline" size="sm">
+                <a href={video.sourceUrl} target="_blank" rel="noreferrer">
+                  <ExternalLink />
+                  YouTube
+                </a>
+              </Button>
+            </div>
+            <p className="mt-4 max-w-3xl text-sm leading-6 text-muted-foreground">{video.goal}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
               {video.tags.map((tag) => (
                 <Badge key={tag} variant="outline">
                   {tag}
                 </Badge>
               ))}
             </div>
-            <h2 className="text-2xl font-bold">{video.title}</h2>
-            <p className="text-sm text-muted-foreground">
-              {video.channel} • {video.views} views • {video.published}
-            </p>
           </div>
 
-          <Card className="border-0 bg-white shadow-sm">
+          <Card>
             <CardContent className="grid gap-4 p-5 sm:grid-cols-3">
               <div className="flex gap-3">
                 <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
@@ -104,24 +116,24 @@ export default async function WatchPage({ params }: WatchPageProps) {
           </Card>
         </section>
 
-        <aside className="space-y-5">
+        <aside className="space-y-5 lg:sticky lg:top-20 lg:self-start">
           <AiCoach video={video} />
-          <Card className="border-0 bg-white shadow-sm">
+          <Card>
             <CardContent className="space-y-4 p-4">
               <div className="flex items-center gap-2">
                 <BookMarked className="size-5 text-primary" />
                 <h2 className="font-semibold">Practice queue</h2>
               </div>
               <div className="space-y-3 text-sm">
-                <div className="flex items-center gap-2 rounded-md bg-muted p-3">
+                <div className="flex items-center gap-2 rounded-sm bg-surface-high p-3">
                   <ListVideo className="size-4 text-primary" />
                   Save phrase list
                 </div>
-                <div className="flex items-center gap-2 rounded-md bg-muted p-3">
+                <div className="flex items-center gap-2 rounded-sm bg-surface-high p-3">
                   <Captions className="size-4 text-primary" />
                   Generate cloze exercise
                 </div>
-                <div className="flex items-center gap-2 rounded-md bg-muted p-3">
+                <div className="flex items-center gap-2 rounded-sm bg-surface-high p-3">
                   <Languages className="size-4 text-primary" />
                   Compare native translation
                 </div>
@@ -131,9 +143,9 @@ export default async function WatchPage({ params }: WatchPageProps) {
         </aside>
       </div>
 
-      <section className="mx-auto max-w-7xl px-4 pb-10">
+      <section className="w-full px-4 pb-10 sm:px-6 lg:px-8">
         <h2 className="mb-4 text-xl font-bold">More language lessons</h2>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
           {relatedVideos.map((relatedVideo) => (
             <VideoCard key={relatedVideo.id} video={relatedVideo} />
           ))}
